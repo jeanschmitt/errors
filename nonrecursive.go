@@ -13,7 +13,7 @@ func isNonRecursive(err, target error) bool {
 		return true
 	}
 
-	if x, ok := err.(interface{ Is(error) bool }); ok {
+	if x, ok := err.(Iser); ok {
 		return x.Is(target)
 	}
 
@@ -39,7 +39,7 @@ func asNonRecursive(err error, target any) bool {
 		val.Elem().Set(reflect.ValueOf(err))
 		return true
 	}
-	if x, ok := err.(interface{ As(any) bool }); ok && x.As(target) {
+	if x, ok := err.(Aser); ok && x.As(target) {
 		return true
 	}
 
